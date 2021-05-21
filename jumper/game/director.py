@@ -50,7 +50,7 @@ class Director:
         # self.console.write(message)
         # location = self.console.read_number("Enter a location [1-1000]: ")
         # if location: self.hunter.move(location)
-        self.current_guess = self.console.get_letter()
+        self.current_guess = self.console.read_letters("Guess a letter [a-z]: ")
         
         
     def do_updates(self):
@@ -61,8 +61,10 @@ class Director:
             self (Director): An instance of Director.
         """
         # self.rabbit.watch(self.hunter.location)
-        self.word.check_letter()
-        self.jumper.update()
+        if not self.word.check_letter(self.current_guess):
+            self.jumper.deduct_life()
+        
+        # self.jumper.update()
         
     def do_outputs(self):
         """Outputs the important game information for each round of play. In 
@@ -74,6 +76,6 @@ class Director:
         # hint = self.rabbit.get_hint()
         # self.console.write(hint)
         # self.keep_playing = (self.rabbit.distance[-1] != 0)
-        self.keep_playing = self.jumper.keep_playing
-        status = self.jumper.get_output()
-        self.console.write(status)
+        self.keep_playing = self.jumper.is_alive()
+        jumper_drawing = self.jumper.get_output()
+        self.console.write(jumper_drawing)

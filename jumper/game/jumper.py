@@ -1,5 +1,5 @@
 import random
-#from game.word import Word
+from game.word import Word
 
 class Jumper:
     """A code template for a person who directs the game. The responsibility of 
@@ -34,7 +34,7 @@ class Jumper:
         ]
 
     def get_output(self):
-        output_string = f"{self.word.cur_word}\n"
+        output_string = f"{self.word.hidden_word}\n"
         for line in self.drawing:
             output_string += f"{line}\n"
         output_string += "^^^^^^^\n"
@@ -47,5 +47,8 @@ class Jumper:
         if self.lives == 0:
             self.drawing.insert(0, "  X   ")
 
-        if len(self.drawing) == 3:
-            self.drawing.insert("  X   ")
+    def is_alive(self):
+        if self.lives > 0:
+            return True
+        else:
+            return False
