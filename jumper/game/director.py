@@ -13,9 +13,10 @@ class Director:
 
     Attributes:
         console (Console): An instance of the class of objects known as Console.
+        jumper (Jumper): An instance of the class of objects known as Jumper.
         keep_playing (boolean): Whether or not the game can continue.
-        hunter (Hunter): An instance of the class of objects known as Hunter.
-        rabbit (Rabbit): An instance of the class of objects known as Rabbit.
+        word (Word): An instance of the class of objects known as Word.
+        current_guess (string): The last guess made by the player.
     """
 
     def __init__(self):
@@ -31,7 +32,8 @@ class Director:
         self.current_guess = ""
         
     def start_game(self):
-        """Starts the game loop to control the sequence of play.
+        """Starts the game loop to control the sequence of play. When the game
+        is over, it plays a corresponding sound and displays the correct word.
         
         Args:
             self (Director): an instance of Director.
@@ -51,17 +53,16 @@ class Director:
         else:
             playsound('./assets/death.mp3')
 
+
+
     def get_inputs(self):
         """Gets the inputs at the beginning of each round of play. In this case,
-        that means moving the hunter to a new location.
+        gets a letter from the player to match the word. Only allows players to
+        input letters they haven't guessed yet.
 
         Args:
             self (Director): An instance of Director.
         """
-        # message = self.hunter.get_message()
-        # self.console.write(message)
-        # location = self.console.read_number("Enter a location [1-1000]: ")
-        # if location: self.hunter.move(location)
         self.current_guess = self.console.read_letters("Guess a letter [a-z]: ")
 
         while self.current_guess in self.word.all_guesses:
@@ -70,27 +71,23 @@ class Director:
         
     def do_updates(self):
         """Updates the important game information for each round of play. In 
-        this case, that means the rabbit watches the hunter.
+        this case, the jumper hangs the man some more, or the new correct letter
+        gets displayed.
 
         Args:
             self (Director): An instance of Director.
         """
-        # self.rabbit.watch(self.hunter.location)
         if not self.word.check_letter(self.current_guess):
             self.jumper.deduct_life()
         
-        # self.jumper.update()
-        
     def do_outputs(self):
         """Outputs the important game information for each round of play. In 
-        this case, that means the rabbit provides a hint.
+        this case, that means it displays if the guy is alive or not still 
+        along with the word.
 
         Args:
             self (Director): An instance of Director.
         """
-        # hint = self.rabbit.get_hint()
-        # self.console.write(hint)
-        # self.keep_playing = (self.rabbit.distance[-1] != 0)
         self.keep_playing = self.jumper.is_alive()
         jumper_drawing = f"{self.word.hidden_word}\n\n" + self.jumper.get_output()
         self.console.write(jumper_drawing)
