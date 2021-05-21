@@ -1,8 +1,13 @@
+from random import choice
+
 class Word:
 
     def __init__(self):
 
-        self.cur_word = "foo".lower()
+        with open('./assets/Dicitonary', 'r') as f:
+            all_words = f.read().split("\n")
+
+        self.cur_word = choice(all_words).lower() # "foo".lower()
         self.hidden_word = ""
 
         self.all_guesses = []
@@ -59,3 +64,4 @@ if __name__ == "__main__":
     wd = Word()
     wd.check_letter("o")
     wd.check_letter('F')
+    print(wd.hidden_word)

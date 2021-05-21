@@ -1,5 +1,5 @@
 import random
-from game.word import Word
+#from game.word import Word
 
 class Jumper:
     """A code template for a person who directs the game. The responsibility of 
@@ -22,7 +22,7 @@ class Jumper:
             self (Director): an instance of Director.
         """
         self.lives = 5
-        self.word = Word()
+        # self.word = Word()
         self.drawing = [
             r" ___  ",  # 0
             r"/___\ ",  # 1
@@ -34,14 +34,14 @@ class Jumper:
         ]
 
     def get_output(self):
-        output_string = f"{self.word.hidden_word}\n"
+        output_string = f""
         for line in self.drawing:
             output_string += f"{line}\n"
         output_string += "^^^^^^^\n"
         return output_string
 
     def deduct_life(self):
-        self.drawing.remove(0)
+        self.drawing.pop(0)
         self.lives -= 1
 
         if self.lives == 0:

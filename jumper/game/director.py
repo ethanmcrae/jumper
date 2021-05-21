@@ -2,6 +2,8 @@ from game.console import Console
 from game.jumper import Jumper
 from game.word import Word
 
+from playsound import playsound
+
 class Director:
     """A code template for a person who directs the game. The responsibility of 
     this class of objects is to control the sequence of play.
@@ -34,10 +36,20 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
+
+        self.do_outputs()
+
         while self.keep_playing:
             self.get_inputs()
             self.do_updates()
             self.do_outputs()
+
+        self.console.write("The word was: " + self.word.cur_word)
+
+        if self.word.is_win():
+            playsound('./assets/win.wav')
+        else:
+            playsound('./assets/death.mp3')
 
     def get_inputs(self):
         """Gets the inputs at the beginning of each round of play. In this case,
@@ -51,6 +63,9 @@ class Director:
         # location = self.console.read_number("Enter a location [1-1000]: ")
         # if location: self.hunter.move(location)
         self.current_guess = self.console.read_letters("Guess a letter [a-z]: ")
+
+        while self.current_guess in self.word.all_guesses:
+            self.current_guess = self.console.read_letters("You already guessed that. Please guess a new letter [a-z]: ")
         
         
     def do_updates(self):
@@ -77,5 +92,8 @@ class Director:
         # self.console.write(hint)
         # self.keep_playing = (self.rabbit.distance[-1] != 0)
         self.keep_playing = self.jumper.is_alive()
-        jumper_drawing = self.jumper.get_output()
+        jumper_drawing = f"{self.word.hidden_word}\n\n" + self.jumper.get_output()
         self.console.write(jumper_drawing)
+
+        if self.word.is_win():
+            self.keep_playing = False
