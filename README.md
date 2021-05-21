@@ -35,3 +35,6 @@ root                    (project root folder)
 ## Authors
 ---
 Ethan McRae - ethanmcrae0@gmail.com
+Joshua Kopaunik
+Jaden Day
+Brigham Chen
