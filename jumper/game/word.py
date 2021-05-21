@@ -2,7 +2,29 @@ from random import choice
 
 class Word:
 
+    """
+        Handles generating the secret word, and checking if inputs
+        are in that word.
+
+        Stereotype:
+            Service Provider, information holder
+
+        Attributes:
+            cur_word: The secret word to guess
+            hidden_word: Holds the current guessed letters in order,
+                         seperated by underscores. To begin, it is just underscores.
+            all_guesses: A list of all letters that have been guessed
+            hidden_word_list: An array of all hidden_word characters
+            cur_word_list: An array of all cur_word characters
+
+
+    """
+
     def __init__(self):
+
+        """
+            The class constructor
+        """
 
         with open('./assets/Dicitonary', 'r') as f:
             all_words = f.read().split("\n")
@@ -25,6 +47,21 @@ class Word:
 
 
     def check_letter(self, letter):
+
+        """
+            Checks if an inputted letter is in the word. If
+            it takes hidden_word_list, then it replaces
+            the underscores at those indexes with the letters.
+
+            It also updates hidden_word and all_guesses
+
+            Finally, it returns True if the letter was correct,
+            and false if it was incorrect.
+
+            Args:
+                The letter to guess
+
+        """
 
         letter = letter.lower()
 
@@ -50,18 +87,23 @@ class Word:
 
 
     def get_output(self):
+        """
+            Returns the current status of hidden word
+        """
         return self.hidden_word
 
     def is_win(self):
+
+        """
+            Checks if the user was won or not, based
+            on it all characters have been guessed.
+        :return:
+            True if all letters have been guessed
+            False if there are still letters to be guessed.
+        """
 
         if "_" in self.hidden_word_list:
             return False
         else:
             return True
 
-
-if __name__ == "__main__":
-    wd = Word()
-    wd.check_letter("o")
-    wd.check_letter('F')
-    print(wd.hidden_word)
