@@ -4,7 +4,7 @@ class Word:
 
     def __init__(self):
 
-        with open('./assets/Dicitonary', 'r') as f:
+        with open('./Dictionary.txt', 'r') as f:
             all_words = f.read().split("\n")
 
         self.cur_word = choice(all_words).lower() # "foo".lower()
