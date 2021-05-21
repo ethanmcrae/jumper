@@ -10,21 +10,9 @@ class Console:
     Attributes:
         prompt (string): The prompt to display on each line.
     """
-     
-    def read(self, prompt):
-        """Gets text input from the user through the screen.
-
-        Args: 
-            self (Screen): An instance of Screen.
-            prompt (string): The prompt to display to the user.
-
-        Returns:
-            string: The user's input as text.
-        """
-        return input(prompt)
 
     def read_letters(self, prompt):
-        """Gets numerical input from the user through the screen.
+        """Gets alphapebitical input from the user through the screen.
 
         Args: 
             self (Screen): An instance of Screen.
